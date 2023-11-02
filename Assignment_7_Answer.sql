@@ -144,7 +144,7 @@ Select Pname from Programmer where prof1='C' or Prof2='C'
 
 Select Pname from programmer where prof1='COBOL' or prof1='PASCAL' or prof2='COBOL' or prof2='PASCAL'
 
---20. How many programmers don’t know Pascal and C?
+--20. How many programmers donï¿½t know Pascal and C?
 
 Select Pname from programmer where prof1 Not in ('PASCAL','C') AND prof2 NOT in('PASCAL','C')
 select * from Programmer
@@ -188,7 +188,7 @@ Select AVG(salary) as [ AVERAGE SALARY ] from programmer
 
 Select Count(*) AS[Total Number of Player] from programmer where salary between 2000 and 4000 
 
---29. Display the details of those who don’t know Clipper, COBOL or Pascal.
+--29. Display the details of those who donï¿½t know Clipper, COBOL or Pascal.
 
 Select * from programmer where Prof1 Not in ('Cobol','Clipper','Pascal') AND prof2 Not in ('Cobol','Clipper','Pascal')
 
@@ -218,16 +218,16 @@ Select PName,Developin, Sum(Scost*Sold) AS [Sales By Programmer] from Software g
 
 Select Developin,Avg(DCost) AS [Average Dev Cost] ,Avg(SCost)AS [Average Sell Cost],Avg(Scost*sold) AS[Average Price Per Copy] from Software group by Developin
 
---35. Display each programmer’s name and the costliest and cheapest packages developed by him or her.
+--35. Display each programmerï¿½s name and the costliest and cheapest packages developed by him or her.
 
 Select PName, Max(DCost)AS [Costliest Development], Min(DCost) AS [Cheapest Development] from Software group by PName
 
---36. Display each institute’s name with the number of courses and the average cost per course.
+--36. Display each instituteï¿½s name with the number of courses and the average cost per course.
 
 Select Institute,Count(*) AS [No. Of Courses],Avg(Course_fee) AS [Average Course Fee] from Studies
 group by institute
 
---37. Display each institute’s name with the number of students.
+--37. Display each instituteï¿½s name with the number of students.
 
 select * from studies
 Select Institute, Count(PNAME) AS[ No. Of Students] from Studies Group By Institute
@@ -313,7 +313,14 @@ Select PName AS [Programmer] From Software where Developin= ANY( Select Developi
 group by Developin
 Having Count(Developin)=1)
 
---52. Who is the youngest programmer knowing dBase?Select top 1 PName, Datediff(yyyy,Dob,getdate()) from Programmer where Prof1='dBase' Or Prof2='dBase' order by Datediff(yyyy,Dob,getdate()) ASC--53. Which female programmer earning more than 3000 does not know C, C++, Oracle or dBase?
+--52. Who is the youngest programmer knowing dBase?
+
+Select top 1 PName, Datediff(yyyy,Dob,getdate()) from Programmer 
+where Prof1='dBase' Or Prof2='dBase' 
+order by Datediff(yyyy,Dob,getdate()) ASC
+
+
+--53. Which female programmer earning more than 3000 does not know C, C++, Oracle or dBase?
 
 Select PName from programmer 
 where salary>3000 and Prof1 not in('C','Cpp','Oracle','dBase') and Prof2 not in('C','Cpp','Oracle','dBase') and Gender='F'
@@ -449,11 +456,15 @@ Select top 1 year(DOB),Count(year(Dob)) AS [Most No. Of Programmer] From Program
 Select TOP 1 Format(DOJ,'MMMMM'),Count(month(DOJ)) as [MOST NO. JOINING] from Programmer group by Format(DOJ,'MMMMM')
 order by Count(Month(DOJ)) DESC
 
---78. In which language are most of the programmer’s proficient?
+--78. In which language are most of the programmerï¿½s proficient?
 select TOP 1 Prof1,Count(PName) from programmer group by Prof1 order by Count(PName) DESC
 select TOP 1 Prof2,Count(PName) from programmer group by Prof2 order by Count(PName) DESC
 
---79. Who are the male programmers earning below the average salary of female programmers?Select PNAME from programmer where salary<(select AVG(Salary) from Programmer where Gender='F')--80. Who are the female programmers earning more than the highest paid?
+--79. Who are the male programmers earning below the average salary of female programmers?
+
+Select PNAME from programmer where salary<(select AVG(Salary) from Programmer where Gender='F')
+
+--80. Who are the female programmers earning more than the highest paid?
 
 SELECT TOP 1 PNAME from programmer where Gender='F' order by salary DESC
 
@@ -594,7 +605,19 @@ UNION
 SELECT Prof2 AS LANGUAGE from Programmer Where PROF2 NOT IN (SELECT Prof2 From Programmer )
 
 
---99. How much does the person who developed the highest selling packageearn and what course did he/she undergo?Select Salary from Programmer where PNAME in (Select TOP 1 PNAME from software group by PNAME,TITLE order by SUM(SOLD) DESC)create table #temp7 (PNAME Varchar(30))Insert into #temp7Select TOP 1 PNAME from software group by PNAME,TITLE order by SUM(SOLD) DESC Select PNAME,COURSE From Studies Where PNAME IN(Select PName from #temp7)--100. What is the average salary for those whose software sales is more than 50,000?
+--99. How much does the person who developed the highest selling packageearn and what course did he/she undergo?
+
+Select Salary from Programmer where PNAME in 
+(Select TOP 1 PNAME from software group by PNAME,TITLE order by SUM(SOLD) DESC)
+
+
+create table #temp7 (PNAME Varchar(30))
+Insert into #temp7
+Select TOP 1 PNAME from software group by PNAME,TITLE order by SUM(SOLD) DESC
+ 
+Select PNAME,COURSE From Studies Where PNAME IN(Select PName from #temp7)
+
+--100. What is the average salary for those whose software sales is more than 50,000?
 
 Select PNAME AS [SALES] from Software where (SCOST*SOLD) > 50000 
 
@@ -651,4 +674,7 @@ Select PNAME, INSTITUTE from Studies where PNAME IN(Select PNAME from Software)
 
 
 --107. List the programmer names (from the programmer table) and the
---number of packages each has Select PNAME,COUNT(TITLE) from Software where PNAME IN (Select PNAME From Programmer) group by PNAME
+--number of packages each has 
+
+Select PNAME,COUNT(TITLE) from Software where PNAME IN (Select PNAME From Programmer) group by PNAME
+
