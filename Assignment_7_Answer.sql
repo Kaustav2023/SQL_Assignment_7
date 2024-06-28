@@ -260,15 +260,15 @@ Select Title,Avg(Dcost-Scost)AS [Average Diff d/w Scost and Dcost] from Software
 
 
 SELECT
-    PName,
+    Title,
     SUM(SCOST*Sold) AS total_SCOST,
-    SUM(DCOST) AS total_DCOST,
-    SUM((SCOST*SOLD)-DCOST) AS total_amount_recovered  
+    SUM(DCOST*Sold) AS total_DCOST,
+    SUM((DCOST*SOLD)-(SCOST*SOLD) AS total_amount_recovered  
 FROM
     Software
 GROUP BY
-    PName
-Having Sum((SCost*Sold)-DCost)<0
+    Title
+Having Sum((DCOST*SOLD)-(SCOST*SOLD))<0
 
 --44. Display the highest, lowest and average salaries for those earning more than 2000.
 
