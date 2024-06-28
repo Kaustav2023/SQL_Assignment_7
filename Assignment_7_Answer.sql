@@ -224,7 +224,7 @@ Select PName, Max(DCost)AS [Costliest Development], Min(DCost) AS [Cheapest Deve
 
 --36. Display each institute�s name with the number of courses and the average cost per course.
 
-Select Institute,Count(*) AS [No. Of Courses],Avg(Course_fee) AS [Average Course Fee] from Studies
+Select Institute,Count(Distinct Course) AS [No. Of Courses],Avg(Course_fee) AS [Average Course Fee] from Studies
 group by institute
 
 --37. Display each institute�s name with the number of students.
