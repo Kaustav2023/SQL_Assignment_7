@@ -248,7 +248,7 @@ From Software where Developin Not In ('C','CPP') group by Developin
 
 --41. Display the number of packages in each language for which development cost is less than 1000.
 
-Select Developin,Count(Title) AS [No. Of Packages] 
+Select Developin,Count(DISTINCT Title) AS [No. Of Packages] 
 From Software where DCOST<1000
 Group By Developin
 
