@@ -301,10 +301,21 @@ Select TOP 1 PName,Datediff(yyyy,doj,getdate()) AS [LEAST EXPERIENCED] From Prog
 
 --50. Which language is known by only one programmer?
 
-Select * from software
-Select Developin AS [Language] From Software where Developin= ANY( Select Developin from software 
-group by Developin
-Having Count(Developin)=1)
+With AllLanguages AS (
+     Select PNAME,prof1 AS lang
+	 From Programmer
+	 UNION ALL 
+	 Select PNAME,prof2 AS lang
+	 From Programmer
+),
+LanguageCounts AS(
+     Select lang,Count(*) as Cnt
+	 From AllLanguages
+	 Group By lang
+)
+Select lang
+From LanguageCounts
+Where Cnt=1;
 
 
 --51. Who is the above programmer referred in 50?
