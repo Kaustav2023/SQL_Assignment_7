@@ -323,9 +323,24 @@ Where Cnt=1;
 
 --51. Who is the above programmer referred in 50?
 
-Select PName AS [Programmer] From Software where Developin= ANY( Select Developin from software 
-group by Developin
-Having Count(Developin)=1)
+ With AllLanguages AS (
+     Select PNAME,prof1 AS lang
+	 From Programmer
+	 UNION ALL 
+	 Select PNAME,prof2 AS lang
+	 From Programmer
+),
+LanguageCounts AS(
+     Select lang,Count(*) as Cnt
+	 From AllLanguages
+	 Group By lang
+),
+Coder AS(
+   Select PNAME 
+   From AllLanguages 
+   where lang IN (Select lang from LanguageCounts Where Cnt=1)
+)
+Select * from Coder
 
 --52. Who is the youngest programmer knowing dBase?
 
