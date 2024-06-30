@@ -297,7 +297,10 @@ Select TOP 1 Pname,Datediff(yyyy,doj,getdate()) AS [LEAST EXPERIENCED] From Prog
 
 --49. Who is the most experienced male programmer knowing PASCAL?
 
-Select TOP 1 PName,Datediff(yyyy,doj,getdate()) AS [LEAST EXPERIENCED] From Programmer Where gender='M'Order by Datediff(yyyy,doj,getdate()) DESC
+Select TOP 1 PName,Datediff(yyyy,doj,getdate()) AS [MOST EXPERIENCED] 
+	From Programmer 
+	Where gender='M' AND (Prof1='PASCAL' Or Prof2='PASCAl')
+	Order by Datediff(yyyy,doj,getdate()) DESC
 
 --50. Which language is known by only one programmer?
 
