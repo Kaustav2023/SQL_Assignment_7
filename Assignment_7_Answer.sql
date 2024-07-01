@@ -367,10 +367,15 @@ Select TOP 1 Course,Course_Fee From Studies order by Course_Fee DESC
 
 --56. Which course has been done by the most number of students?
 
-Select * from studies
-SELECT TOP 1 Course,COUNT(PNAME)AS [No. Of Students] from Studies 
-group by Course
-order by Count(PName) DESC
+Select Course,Count(*) AS [No. Of Students]
+From Studies
+Group By Course
+Having Count(*) in 
+(Select Top 1 Count(*) 
+From Studies
+Group By Course
+Order By Count(*) DESC)
+
 
 --57. Which institute conducts the costliest course?
 
