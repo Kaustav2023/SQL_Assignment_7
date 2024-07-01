@@ -379,8 +379,12 @@ Order By Count(*) DESC)
 
 --57. Which institute conducts the costliest course?
 
-Select * from Studies
-Select TOP 1 Institute,Course_Fee from Studies order by Course_Fee DESC
+ Select Institute,Course_Fee
+ From Studies
+ Where Course_Fee IN
+ (Select Top 1 Course_Fee 
+ From Studies
+ Order by Course_Fee DESC)
 
 --58. Display the name of the institute and the course which has below average course fee.
 
